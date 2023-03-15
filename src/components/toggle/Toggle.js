@@ -24,36 +24,32 @@ function Toggle() {
   // const [a, b] = [1, 2];
   // console.log(a, b);
   // initialize value: boolean(true, false), number(1,2,3,4), string("evondev"), undefined, null, [1,2,3,4], {title: "Frontend Developer"}
-  const [on, setOn] = useState(false);
-  console.log(on);
+  // const [on, setOn] = useState(false);
+  // console.log(on);
   // console.log(on, setOn);
   // [title, setTitle]
   // [isActive, setIsActive]
   // [active, unactive]
   // <div className="toggle" onclick="toggle"></div>; onClick
   // state changes -> re-render
-  const handleToggle = (enable) => {
-    //  setOn(callback) -> setOn(prevState => !prevState)
+  // const handleToggle = (enable) => {
+  //   //  setOn(callback) -> setOn(prevState => !prevState)
+  //   setOn((on) => !on);
+  // const [active, setActive] = useState(true);
+  // if (enable) {
+  //   const [active, setActive] = useState(true);
+  // }
+  const [on, setOn] = useState(false);
+
+  const handleClick = () => {
     setOn((on) => !on);
-    // const [active, setActive] = useState(true);
-    // if (enable) {
-    //   const [active, setActive] = useState(true);
-    // }
   };
   return (
-    <div>
-      <div className={`toggle ${on ? "active" : ""}`} onClick={handleToggle}>
+    <>
+      <div className={`toggle ${on ? "active" : ""}`} onClick={handleClick}>
         <div className={`spinner ${on ? "active" : ""}`}></div>
       </div>
-      {/* <div className="toggle-control">
-        <div className="toggle-on" onClick={() => setOn(true)}>
-          On
-        </div>
-        <div className="toggle-off" onClick={() => setOn(false)}>
-          Off
-        </div>
-      </div> */}
-    </div>
+    </>
   );
 }
 export default Toggle;

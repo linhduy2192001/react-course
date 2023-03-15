@@ -9,8 +9,9 @@ export function calculateWinner(cells) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let index = 0; index < lines.length; index++) {
-    const [a, b, c] = lines[index];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    console.log("lines[i]", lines[i]);
     if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
       return cells[a];
     }
