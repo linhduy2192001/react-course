@@ -5,8 +5,8 @@ const LoadingSkeleton = (props) => {
     <div
       className="skeleton"
       style={{
-        height: props.height,
         width: props.width || "100%",
+        height: props.height,
         borderRadius: props.radius,
       }}
     ></div>

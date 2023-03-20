@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from "react";
 export default function useClickOutSide(dom = "button") {
   const [show, setShow] = useState(false);
   const nodeRef = useRef(null);
+
   useEffect(() => {
-    function handleClickOutSide(e) {
+    const handleClickOut = (e) => {
       if (
         nodeRef.current &&
         !nodeRef.current.contains(e.target) &&
@@ -12,10 +13,10 @@ export default function useClickOutSide(dom = "button") {
       ) {
         setShow(false);
       }
-    }
-    document.addEventListener("click", handleClickOutSide);
+    };
+    document.addEventListener("click", handleClickOut);
     return () => {
-      document.removeEventListener("click", handleClickOutSide);
+      document.removeEventListener("click", handleClickOut);
     };
   }, []);
   return {

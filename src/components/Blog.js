@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import useHover from "../hooks/useHover";
 import useLinkNewTab from "../hooks/useLinkNewTab";
 
 const Blog = () => {
   const { contentRef } = useLinkNewTab();
-  const { hovered, nodeRef } = useHover();
+  const { nodeRef, hovered } = useHover();
   return (
     <div className="entry-content" ref={contentRef}>
       <p className="mb-5">
@@ -14,7 +14,7 @@ const Blog = () => {
         Voluptate, saepe{" "}
         <a
           href="https://google.com"
-          className={`underline ${hovered ? "text-green-400" : ""}`}
+          className={`underline ${hovered ? "text-green-400 " : ""}`}
           ref={nodeRef}
         >
           google.com

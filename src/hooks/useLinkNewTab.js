@@ -6,7 +6,7 @@ export default function useLinkNewTab() {
     if (contentRef) {
       const links = contentRef.current.querySelectorAll("a");
       links.length > 0 &&
-        links.forEach((item) => item.setAttribute("target", "_blank"));
+        links.forEach((link) => link.setAttribute("target", "_blank"));
     }
   }, []);
   return {

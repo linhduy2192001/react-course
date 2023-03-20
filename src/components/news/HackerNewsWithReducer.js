@@ -1,42 +1,45 @@
-import React, { useRef, useState } from "react";
 import axios from "axios";
+
+import React, { useEffect, useReducer, useRef, useState } from "react";
+// http://hn.algolia.com/api/v1/search?query=react
 
 const initialState = {
   hits: [],
   query: "",
   loading: true,
   errorMessage: "",
-  url: "https://hn.algolia.com/api/v1/search?query=''",
+  url: "http://hn.algolia.com/api/v1/search?query=''",
 };
-
-const hackerNewsReducer = (state, action) => {
+const HackerNewsReducer = (state, action) => {
   switch (action.type) {
     case "SET_DATA": {
-      // const newState = JSON.parse(JSON.stringify(state));
       return { ...state, hits: action.payload };
     }
     case "SET_LOADING": {
       return { ...state, loading: action.payload };
     }
-
     case "SET_ERROR": {
       return { ...state, errorMessage: action.payload };
     }
-
     case "SET_QUERY": {
       return { ...state, query: action.payload };
     }
     case "SET_URL": {
       return { ...state, url: action.payload };
     }
-
     default:
       break;
   }
 };
-
 const HackerNewsWithReducer = () => {
-  const [state, dispatch] = React.useReducer(hackerNewsReducer, initialState);
+  const [state, dispatch] = useReducer(HackerNewsReducer, initialState);
+  // const [hits, setHits] = useState([]);
+  // const [query, setQuery] = useState("");
+  // const [loading, setLoading] = useState(true);
+  // const [errorMessage, setErrorMessage] = useState("");
+  // const [url, setUrl] = useState(
+  //   `http://hn.algolia.com/api/v1/search?query=${query}`
+  // );
   const handleFetchData = useRef({});
 
   handleFetchData.current = async () => {
@@ -44,6 +47,7 @@ const HackerNewsWithReducer = () => {
       type: "SET_LOADING",
       payload: true,
     });
+    // setLoading(true);
     try {
       const response = await axios.get(state.url);
       dispatch({
@@ -54,6 +58,8 @@ const HackerNewsWithReducer = () => {
         type: "SET_LOADING",
         payload: false,
       });
+      // setHits(response.data?.hits || []);
+      // setLoading(false);
     } catch (error) {
       dispatch({
         type: "SET_LOADING",
@@ -65,17 +71,17 @@ const HackerNewsWithReducer = () => {
       });
     }
   };
-  React.useEffect(() => {
+  useEffect(() => {
     handleFetchData.current();
   }, [state.url]);
   return (
-    <div className="bg-white mx-auto mt-5 mb-5 p-5 rounded-lg shadow-md w-2/4">
+    <div className="bg-white mx-auto mt-5 p-5 rounded-lg shadow-md w-2/4">
       <div className="flex mb-5 gap-x-5">
         <input
           type="text"
-          className="border border-gray-200 p-5 block w-full rounded-md transition-all focus:border-blue-400"
-          placeholder="Typing your keyword..."
+          className="border border-gray-200 p-5 block w-full rounded-md   transition-all focus:border-blue-400"
           defaultValue={state.query}
+          placeholder="Typing your keyword"
           onChange={(e) =>
             dispatch({
               type: "SET_QUERY",
@@ -84,26 +90,25 @@ const HackerNewsWithReducer = () => {
           }
         />
         <button
-          onClick={() =>
-            dispatch({
-              type: "SET_URL",
-              payload: `https://hn.algolia.com/api/v1/search?query=${state.query}`,
-            })
-          }
           disabled={state.loading}
-          className="bg-blue-500 text-white font-semibold p-5 rounded-md flex-shrink-0"
           style={{
             opacity: state.loading ? "0.25" : "1",
           }}
+          onClick={() => {
+            dispatch({
+              type: "SET_URL",
+              payload: `http://hn.algolia.com/api/v1/search?query=${state.query}`,
+            });
+          }}
+          className="bg-blue-500 text-white font-semibold p-5 rounded-md flex-shrink-0"
         >
-          Fetching
+          Fetching{" "}
         </button>
       </div>
+
+      {!state.loading && state.errorMessage && <p>{state.errorMessage}</p>}
       {state.loading && (
         <div className="loading w-8 h-8 rounded-full border-blue-500 border-4 border-r-4 border-r-transparent animate-spin mx-auto my-10"></div>
-      )}
-      {!state.loading && state.errorMessage && (
-        <p className="text-red-400 my-5">{state.errorMessage}</p>
       )}
       <div className="flex flex-wrap gap-5">
         {!state.loading &&
@@ -111,7 +116,7 @@ const HackerNewsWithReducer = () => {
           state.hits.map((item, index) => {
             if (!item.title || item.title.length <= 0) return null;
             return (
-              <h3 key={item.title} className="p-3 bg-gray-100 rounded-md">
+              <h3 key={item.objectID} className="p-3 bg-gray-100 ">
                 {item.title}
               </h3>
             );

@@ -1,14 +1,9 @@
 import React from "react";
-import "./App.scss";
-import GameWithReducer from "./components/tictactoe/Game";
-import Game from "./components/tictactoe/Game";
+import Form from "./components/form/Form";
+import SignUpForm from "./components/form/SignUpForm";
 
 const App = () => {
-  return (
-    <div>
-      <Game></Game>
-    </div>
-  );
+  return <SignUpForm></SignUpForm>;
 };
 
 export default App;

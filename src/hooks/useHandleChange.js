@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export default function useHandleChange(initialValues) {
-  const [values, setValues] = useState(initialValues);
+export default function useHandleChange(initialValue) {
+  const [values, setValues] = useState(initialValue);
   const handleChange = (e) => {
     const type = e.target.type;
     setValues({
