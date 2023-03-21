@@ -1,9 +1,9 @@
 import { useState } from "react";
 
+// Hook
 export default function useLocalStorage(key, initialValue) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
-  // lazy initialize state
   const [storedValue, setStoredValue] = useState(() => {
     if (typeof window === "undefined") {
       return initialValue;
@@ -37,5 +37,5 @@ export default function useLocalStorage(key, initialValue) {
       console.log(error);
     }
   };
-  return { storedValue, setValue };
+  return [storedValue, setValue];
 }

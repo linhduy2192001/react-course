@@ -1,29 +1,27 @@
 import React from "react";
-import { useAuth } from "../contexts/auth-context";
+import { useAuth } from "../contexts/authContext";
 import { useGallery } from "../contexts/gallery-context";
 
 const HeaderMain = () => {
   const { user, setUser } = useAuth();
   const { photos, cartItems } = useGallery();
-  // console.log("HeaderMain ~ photos", photos);
-  // console.log("HeaderMain ~ user", user);
-  const favoriteCount =
+
+  const likedCount =
     photos.length > 0
-      ? photos.filter((item) => item.isFavorite === true).length
+      ? photos.filter((item) => item.isLike === true)?.length
       : 0;
   const cartItemsCount = cartItems.length;
-  // console.log(photos.filter((item) => item.isFavorite === true));
   return (
     <div className="p-4 bg-white shadow-md flex items-center justify-center">
       {user ? (
         <div className="flex items-center gap-x-3">
           <img
-            src={user.avatar}
+            src="https://images.unsplash.com/photo-1679210529713-79345e8af07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60"
             alt=""
             className="w-10 h-10 rounded-full object-cover"
           />
           <span className="text-sm font-medium">
-            Welcome back! <strong>{user.fullname}</strong>
+            Linh Duy Welcome back! <strong>{user.fullname}</strong>{" "}
           </span>
         </div>
       ) : (
@@ -72,10 +70,7 @@ const HeaderMain = () => {
               strokeLinecap="round"
             />
           </svg>
-          <span
-            className="w-5 h-5 rounded-full flex items-center justify-center text-white bg-pink-600 text-xs absolute right-0 top-0 translate-x-2/4
-          "
-          >
+          <span className="w-5 h-5 rounded-full flex items-center justify-center text-white bg-pink-600 text-xs absolute right-0 top-0 translate-x-2/4">
             {cartItemsCount || 0}
           </span>
         </span>
@@ -93,19 +88,16 @@ const HeaderMain = () => {
               fill="black"
             />
           </svg>
-          <span
-            className="w-5 h-5 rounded-full flex items-center justify-center text-white bg-pink-600 text-xs absolute right-0 top-0 translate-x-2/4
-          "
-          >
-            {favoriteCount || 0}
+          <span className="w-5 h-5 rounded-full flex items-center justify-center text-white bg-pink-600 text-xs absolute right-0 top-0 translate-x-2/4">
+            {likedCount || 0}
           </span>
         </span>
       </div>
       <button
-        className="p-2 rounded-md bg-gray-300 text-black ml-auto"
+        className="p-2 rounded-md bg-gray-200 text-black ml-auto"
         onClick={() => setUser(null)}
       >
-        Sign out
+        Sign out{" "}
       </button>
     </div>
   );
